@@ -2,6 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import {router} from '../routes/user.js';
 import { dbConnection } from '../database/config.js';
+import { routerLogin } from '../routes/auth.js';
 
 class Server {
 
@@ -9,7 +10,8 @@ class Server {
         this.app = express()
         this.port = process.env.PORT;
         this.usuariosPath = '/api/usuarios'
-
+        this.authPath = '/api/auth'
+        
 
         //CONN BASES DE DATOS
         this.connectDB()
@@ -33,7 +35,7 @@ class Server {
         //CORS
         this.app.use(cors())
 
-        //Lectur y parseo del body
+        //Lectura y parseo del body
         this.app.use( express.json())
 
         //Directorio publico
@@ -41,6 +43,8 @@ class Server {
     }
 
     routes() {
+        //ORDENAR ALFABETICAMENTE O LA RUTA DE AUTENTICACIÓN DE PRIMERA
+        this.app.use(this.authPath, routerLogin )
         this.app.use(this.usuariosPath, router )
     }
 

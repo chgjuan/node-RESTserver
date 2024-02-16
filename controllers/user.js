@@ -92,13 +92,16 @@ const usuariosDelete = async(req, res) => {
 
     const {id} = req.params
 
+    const uid = req.uid
+
     //FISICAMENTE LO BORRAMOS
     // const usuario = await Usuario.findByIdAndDelete(id)
 
     //CAMBIAR MEJOR EL ESTADO DEL USUARIO POR SI HA HECHO MODIFICACIONES
     const usuario = await Usuario.findByIdAndUpdate(id, {estado: false})
+    // const usuarioAutenticado = req.usuario
 
-    res.json(usuario)
+    res.json({usuario})
 }
 
 const usuariosPatch = (req, res) => {
@@ -107,6 +110,7 @@ const usuariosPatch = (req, res) => {
         msg: 'patch API - Controlador'
     })
 }
+
 
 export {
     usuariosGet,
